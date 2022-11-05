@@ -1,7 +1,7 @@
 # I used https://github.com/soracqt/myarch as a reference.
 # Thanks to soracqt(https://github.com/soracqt).
 
-name: Build Alter Image
+name: Build ISO 
 
 on:
   push:
