@@ -32,7 +32,7 @@ jobs:
 
       - name: Run Reflecrtor
         run: |
-          reflector --protocol https -c Japan --sort rate --save /etc/pacman.d/mirrorlist
+          reflector --sort rate --save /etc/pacman.d/mirrorlist
       
       - name: Install Required Packages
         run: |
