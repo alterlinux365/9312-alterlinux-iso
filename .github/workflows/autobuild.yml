@@ -21,6 +21,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+
       - name: Modify mirrorlist
         run: |
           env
@@ -41,6 +42,8 @@ jobs:
       #   run: ./build.sh -c zstd --noloopmod --noconfirm --cleanup $GITHUB_REF_NAME
 
       - name: upload to sf
+        env:
+          MY_SF_SSH: ${{ secrets.MY_SF_SSH }}
         run: ./5.sf.upload.sh
 
   release:
