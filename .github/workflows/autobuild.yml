@@ -70,7 +70,7 @@ jobs:
 
       - name: Upload to sf
         id: uploadiso
-        run: echo "::set-output name=url::Please Download ISO From SourceForge https://sourceforge.net/projects/alterlinux365/files/${GITHUB_REF_NAME}-${GITHUB_RUN_NUMBER}"
+        run: echo "::set-output name=url::Please Download ISO From SourceForge https://sourceforge.net/projects/alterlinux365/files/${GITHUB_REF_NAME}/${GITHUB_RUN_NUMBER}"
       # ${GITHUB_REF_NAME}-${GITHUB_RUN_NUMBER}"
       # - name: Split ISO Images
       #   run: |
