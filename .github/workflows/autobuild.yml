@@ -32,6 +32,10 @@ jobs:
           env
           df -h
           free -m
+          echo 'Server = https://mirrors.kernel.org/archlinux/$repo/os/$arch' > /etc/pacman.d/mirrorlist
+          echo 'Server = https://america.mirror.pkgbuild.com/$repo/os/$arch' >> /etc/pacman.d/mirrorlist
+          echo 'Server = https://mirror.pkgbuild.com/$repo/os/$arch' >> /etc/pacman.d/mirrorlist
+          echo 'Server = https://america.mirror.pkgbuild.com/$repo/os/$arch' >> /etc/pacman.d/mirrorlist
 
       - name: Install Required Packages
         run: |
