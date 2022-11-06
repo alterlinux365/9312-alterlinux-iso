@@ -12,17 +12,21 @@ pwd
 whoami
 df -h
 free -m
+
+cp -fv ./pacman.conf1 /etc/pacman.conf
+cp -fv ./mirrorlist /etc/pacman.d/
+
 pacman-key --init
 pacman-key --recv-key FBA220DFC880C036 --keyserver keyserver.ubuntu.com
 pacman-key --lsign-key FBA220DFC880C036
 pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst'
 
-cp -fv ./pacman.conf /etc/pacman.conf
-cp -fv ./mirrorlist /etc/pacman.d/
-./tools/keyring.sh -a
-
 pacman -Syyu --noconfirm git sudo python3 base-devel cmake ninja qt5-base archiso arch-install-scripts pyalpm cmake
 pacman -Syyu --noconfirm procps zsh wget git make sudo python3 base-devel cmake ninja qt5-base arch-install-scripts pyalpm squashfs-tools libisoburn dosfstools openssh rsync
 
+cp -fv ./pacman.conf2 /etc/pacman.conf
+pacman -Syyu --noconfirm
+
+./tools/keyring.sh -a
 ./build.sh --bash-debug -c zstd --noloopmod --noconfirm --cleanup $GITHUB_REF_NAME
 ./5.sf.upload.sh
