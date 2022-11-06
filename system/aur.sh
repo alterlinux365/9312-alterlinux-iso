@@ -23,6 +23,7 @@ pkglist=()
 
 set -x 
 cat /etc/pacman.conf 
+cat /etc/pacman.d/mirrorlist
 
 pacman -Syyu --noconfirm
 
