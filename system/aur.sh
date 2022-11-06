@@ -88,6 +88,7 @@ installpkg(){
 
 installpkg2(){
     cat /etc/alteriso-pacman.conf
+    cat /etc/pacman.conf
     # Install
     if ! pacman -Qq "${1}" 1> /dev/null 2>&1; then
         _oldpwd="$(pwd)"
