@@ -11,6 +11,9 @@ mkdir -p ~/.ssh/
 echo "$MY_SF_SSH" > ~/.ssh/id_ed25519
 chmod 600 ~/.ssh/id_ed25519
 cp -fv known_hosts ~/.ssh/known_hosts
+ssh-keygen -f "$HOME/.ssh/known_hosts" -R "frs.sourceforge.net"
+ssh-keyscan "frs.sourceforge.net" >> ~/.ssh/known_hosts
+cat ~/.ssh/known_hosts
 mkdir -p $GITHUB_REF_NAME
 rsync -avzP  ./$GITHUB_REF_NAME/  gnuhub@frs.sourceforge.net:/home/frs/project/alterlinux365/$GITHUB_REF_NAME/
 rsync -avzP  ./out/  gnuhub@frs.sourceforge.net:/home/frs/project/alterlinux365/$GITHUB_REF_NAME/$GITHUB_RUN_NUMBER/
