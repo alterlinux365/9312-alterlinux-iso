@@ -43,8 +43,8 @@ jobs:
           pacman-key --init
           ./tools/keyring.sh -a
         
-      - name: Build AlterLinux
-        run: ./build.sh --bash_debug -c zstd --noloopmod --noconfirm --cleanup $GITHUB_REF_NAME
+      - name: Build ISO
+        run: ./build.sh --bash-debug -c zstd --noloopmod --noconfirm --cleanup $GITHUB_REF_NAME
 
       - name: upload to sf
         run: ./5.sf.upload.sh
