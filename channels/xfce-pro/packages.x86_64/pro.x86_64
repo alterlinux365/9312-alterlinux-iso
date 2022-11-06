@@ -10,7 +10,7 @@
 # Pro packages
 
 #-- Wine --#
-playonlinux
+#playonlinux
 wine
 winetricks
 
