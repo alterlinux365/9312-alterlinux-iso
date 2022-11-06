@@ -16,5 +16,5 @@ ssh-keygen -f "/root/.ssh/known_hosts" -R "frs.sourceforge.net"
 ssh-keyscan "frs.sourceforge.net" >> /root/.ssh/known_hosts
 cat /root/.ssh/known_hosts
 mkdir -p $GITHUB_REF_NAME
-rsync -avzP -e "ssh -i  /root/.ssh/id_rsa" ./$GITHUB_REF_NAME/  gnuhub@frs.sourceforge.net:/home/frs/project/alterlinux365/$GITHUB_REF_NAME/
-rsync -avzP -e "ssh -i  /root/.ssh/id_rsa" ./out/  gnuhub@frs.sourceforge.net:/home/frs/project/alterlinux365/$GITHUB_REF_NAME/$GITHUB_RUN_NUMBER/
+rsync -avzP ./$GITHUB_REF_NAME/  gnuhub@frs.sourceforge.net:/home/frs/project/alterlinux365/$GITHUB_REF_NAME/
+rsync -avzP ./out/  gnuhub@frs.sourceforge.net:/home/frs/project/alterlinux365/$GITHUB_REF_NAME/$GITHUB_RUN_NUMBER/
