@@ -554,6 +554,7 @@ make_packages_aur() {
 
     # prepare for aur helper
     _cp "${script_path}/system/aur.sh" "${airootfs_dir}/root/aur.sh"
+    _cp "${build_dir}/pacman.conf" "${airootfs_dir}/etc/pacman.conf"
     _pacstrap --asdeps --needed "${aur_helper_depend[@]}"
 
     # Run aur script
