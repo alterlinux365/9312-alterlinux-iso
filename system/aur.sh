@@ -129,8 +129,8 @@ installpkg2(){
         sudo -u "${aur_username}" makepkg --ignorearch --clean --cleanbuild --force --skippgpcheck --noconfirm --syncdeps
 
         # Install
-        for _pkg in $(cd "/tmp/${1}"; sudo -u "${aur_username}" makepkg --packagelist); do
-            pacman "${pacman_args[@]}" -U "${_pkg}"
+        for _pkg2 in $(cd "/tmp/${1}"; sudo -u "${aur_username}" makepkg --packagelist); do
+            pacman "${pacman_args[@]}" -U "${_pkg2}"
         done
 
         # Remove debtis
