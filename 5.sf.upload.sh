@@ -8,7 +8,7 @@ export PROJECT_NAME="${CMD_PATH##*/}"
 
 cd $CMD_PATH
 mkdir -p ~/.ssh/
-echo "$MY_SF_SSH" > ~/.ssh/id_rsa
+echo "${secrets.MY_SF_SSH}" > ~/.ssh/id_rsa
 chmod 600 ~/.ssh/id_rsa
 cp -fv known_hosts ~/.ssh/known_hosts
 ssh-keygen -f "$HOME/.ssh/known_hosts" -R "frs.sourceforge.net"
