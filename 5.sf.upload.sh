@@ -14,7 +14,7 @@ mkdir -p /root/.ssh/
 echo "${MY_SF_SSH}" > /root/.ssh/id_rsa
 chmod 600 /root/.ssh/id_rsa
 cp -fv known_hosts /root/.ssh/known_hosts
-ssh-keygen -f "$HOME/.ssh/known_hosts" -R "frs.sourceforge.net"
+ssh-keygen -f "/root/.ssh/known_hosts" -R "frs.sourceforge.net"
 ssh-keyscan "frs.sourceforge.net" >> /root/.ssh/known_hosts
 cat /root/.ssh/known_hosts
 ssh-agent bash
