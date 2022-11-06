@@ -27,30 +27,8 @@ jobs:
           key: ${{ secrets.MY_SF_SSH }} 
           known_hosts: 'just-a-placeholder-so-we-dont-get-errors'
       - uses: actions/checkout@v2
-      - name: Modify mirrorlist
-        run: |
-          env
-          df -h
-          free -m
-          echo 'Server = https://mirrors.kernel.org/archlinux/$repo/os/$arch' > /etc/pacman.d/mirrorlist
-          echo 'Server = https://america.mirror.pkgbuild.com/$repo/os/$arch' >> /etc/pacman.d/mirrorlist
-          echo 'Server = https://mirror.pkgbuild.com/$repo/os/$arch' >> /etc/pacman.d/mirrorlist
-          echo 'Server = https://america.mirror.pkgbuild.com/$repo/os/$arch' >> /etc/pacman.d/mirrorlist
-
-      - name: Install Required Packages
-        run: |
-          pacman -Syyu --noconfirm git sudo python3 base-devel cmake ninja qt5-base archiso arch-install-scripts pyalpm cmake
-          pacman -Syyu --noconfirm procps zsh wget git make sudo python3 base-devel cmake ninja qt5-base arch-install-scripts pyalpm squashfs-tools libisoburn dosfstools openssh rsync
-      - name: Populate keyrings
-        run: |
-          pacman-key --init
-          ./tools/keyring.sh -a
-        
-      - name: Build ISO
-        run: ./build.sh --bash-debug -c zstd --noloopmod --noconfirm --cleanup $GITHUB_REF_NAME
-
-      - name: upload to sf
-        run: ./5.sf.upload.sh
+      - name: build
+        run: ./6.ci.sh
 
   release:
     runs-on: ubuntu-latest
