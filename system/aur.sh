@@ -128,7 +128,7 @@ install_aur_helper(){
         done
 
         # Build
-        sudo -u "${aur_username}" git clone  -b ${aur_helper_package} --depth=1 "https://github.com/archlinux/aur.git" "/tmp/${aur_helper_package}"
+        sudo -u "${aur_username}" git clone "https://aur.archlinux.org/${aur_helper_package}.git" "/tmp/${aur_helper_package}"
         cd "/tmp/${aur_helper_package}"
         sudo -u "${aur_username}" makepkg --ignorearch --clean --cleanbuild --force --skippgpcheck --noconfirm --syncdeps
 
