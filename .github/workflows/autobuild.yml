@@ -15,7 +15,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     container:
-      image: archlinux:latest
+      image: ghcr.io/archlinux365/9318-archlinux-docker/root:latest
       volumes:
         - /home/runner/work/alterdir/alterdir:/tmp/alterdir
       options: "--privileged"
