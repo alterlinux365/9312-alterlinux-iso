@@ -17,5 +17,5 @@ cat ~/.ssh/known_hosts
 ssh-agent bash
 ssh-add
 mkdir -p $GITHUB_REF_NAME
-rsync -avzP  ./$GITHUB_REF_NAME/  gnuhub@frs.sourceforge.net:/home/frs/project/alterlinux365/$GITHUB_REF_NAME/
-rsync -avzP  ./out/  gnuhub@frs.sourceforge.net:/home/frs/project/alterlinux365/$GITHUB_REF_NAME/$GITHUB_RUN_NUMBER/
+rsync -avzP -e "ssh -i  ~/.ssh/id_rsa" ./$GITHUB_REF_NAME/  gnuhub@frs.sourceforge.net:/home/frs/project/alterlinux365/$GITHUB_REF_NAME/
+rsync -avzP -e "ssh -i  ~/.ssh/id_rsa" ./out/  gnuhub@frs.sourceforge.net:/home/frs/project/alterlinux365/$GITHUB_REF_NAME/$GITHUB_RUN_NUMBER/
