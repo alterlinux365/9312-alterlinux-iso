@@ -10,5 +10,10 @@ do
     
     if [ $c != "README.md" ];then
         echo $c
+        if [ $c != "xfce" ];then
+            git checkout $c
+            git merge xfce 
+            p2
+        fi
     fi
 done
