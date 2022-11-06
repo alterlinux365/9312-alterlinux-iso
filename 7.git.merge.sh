@@ -7,5 +7,8 @@ cd $CMD_PATH
 cd channels
 for c in `ls`
 do
-    echo $c
+    
+    if [ $c != "README.md" ];then
+        echo $c
+    fi
 done
