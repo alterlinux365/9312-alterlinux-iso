@@ -15,6 +15,7 @@ free -m
 
 cp -fv ./pacman.conf1 /etc/pacman.conf
 cp -fv ./mirrorlist /etc/pacman.d/
+pacman -Syyu --noconfirm
 
 pacman-key --init
 pacman-key --recv-key FBA220DFC880C036 --keyserver keyserver.ubuntu.com
