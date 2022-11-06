@@ -86,6 +86,26 @@ installpkg(){
             "${@}" || true
 }
 
+installpkg2(){
+    # Install
+    if ! pacman -Qq "${1}" 1> /dev/null 2>&1; then
+        _oldpwd="$(pwd)"
+        # Build
+        sudo -u "${aur_username}" git clone --depth=1 -b $1 "https://github.com/archlinux/aur.git" "/tmp/${1}"
+        cd "/tmp/${1}"
+        sudo -u "${aur_username}" makepkg --ignorearch --clean --cleanbuild --force --skippgpcheck --noconfirm --syncdeps
+
+        # Install
+        for _pkg in $(cd "/tmp/${1}"; sudo -u "${aur_username}" makepkg --packagelist); do
+            pacman "${pacman_args[@]}" -U "${_pkg}"
+        done
+
+        # Remove debtis
+        cd ..
+        remove "/tmp/${1}"
+        cd "${_oldpwd}"
+    fi
+}
 
 #-- main funtions --#
 prepare_env(){
@@ -157,7 +177,7 @@ install_aur_pkgs(){
     chmod +s /usr/bin/sudo
     for _pkg in "${@}"; do
         pacman -Qq "${_pkg}" > /dev/null 2>&1  && continue
-        installpkg "${_pkg}"
+        installpkg2 "${_pkg}"
 
         if ! pacman -Qq "${_pkg}" > /dev/null 2>&1; then
             echo -e "\n[aur.sh] Failed to install ${_pkg}\n"
@@ -167,7 +187,7 @@ install_aur_pkgs(){
 
     # Reinstall failed package
     for _pkg in "${failedpkg[@]}"; do
-        installpkg "${_pkg}"
+        installpkg2 "${_pkg}"
         if ! pacman -Qq "${_pkg}" > /dev/null 2>&1; then
             echo -e "\n[aur.sh] Failed to install ${_pkg}\n"
             exit 1
