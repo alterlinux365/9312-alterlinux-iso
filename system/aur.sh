@@ -24,8 +24,6 @@ pkglist=()
 set -x 
 cat /etc/pacman.conf 
 
-
-
 pacman -Syyu --noconfirm
 
 pacman-key --init
