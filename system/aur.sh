@@ -36,6 +36,11 @@ Server = https://america.mirror.pkgbuild.com/\$repo/os/\$arch
 
 EOF
 
+echo "[chaotic-aur]" >> /etc/pacman.conf
+echo "Include = /etc/pacman.d/chaotic-mirrorlist" >> /etc/pacman.conf
+
+
+
 pacman -Syyu --noconfirm
 
 pacman-key --init
