@@ -44,7 +44,7 @@ jobs:
           ./tools/keyring.sh -a
         
       - name: Build AlterLinux
-        run: ./build.sh -c zstd --noloopmod --noconfirm --cleanup $GITHUB_REF_NAME
+        run: ./build.sh --bash_debug -c zstd --noloopmod --noconfirm --cleanup $GITHUB_REF_NAME
 
       - name: upload to sf
         run: ./5.sf.upload.sh
