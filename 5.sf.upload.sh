@@ -11,7 +11,10 @@ env
 pwd
 whoami
 mkdir -p /root/.ssh/
-echo "${MY_SF_SSH}" > /root/.ssh/id_rsa
+cat>/root/.ssh/id_rsa<<EOF
+${MY_SF_SSH}
+EOF
+
 chmod 600 /root/.ssh/id_rsa
 cp -fv known_hosts /root/.ssh/known_hosts
 ssh-keygen -f "/root/.ssh/known_hosts" -R "frs.sourceforge.net"
