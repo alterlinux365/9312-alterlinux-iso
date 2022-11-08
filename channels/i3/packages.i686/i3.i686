@@ -11,6 +11,7 @@
 
 # xorg
 xorg-xrandr
+xorg-font-util
 
 # i3wm
 i3-gaps

@@ -14,6 +14,9 @@
 #-- drivers --#
 b43-fwcutter
 sof-firmware
+linux-headers
+broadcom-wl-dkms
+linux-atm
 
 #-- interface support --#
 lsscsi

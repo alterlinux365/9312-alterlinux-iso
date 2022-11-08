@@ -21,6 +21,37 @@ aur_helper_package="yay"
 aur_helper_args=()
 pkglist=()
 
+set -x 
+cat /etc/pacman.conf
+
+cat /etc/pacman.d/mirrorlist
+
+
+
+cat>/etc/pacman.d/mirrorlist<<EOF
+Server = https://mirrors.kernel.org/archlinux/\$repo/os/\$arch
+Server = https://america.mirror.pkgbuild.com/\$repo/os/\$arch
+Server = https://mirror.pkgbuild.com/\$repo/os/\$arch
+Server = https://america.mirror.pkgbuild.com/\$repo/os/\$arch
+
+EOF
+
+
+
+
+
+pacman -Syyu --noconfirm
+
+pacman-key --init
+pacman-key --recv-key FBA220DFC880C036 --keyserver keyserver.ubuntu.com
+pacman-key --lsign-key FBA220DFC880C036
+pacman --noconfirm -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst'
+
+echo "[chaotic-aur]" >> /etc/pacman.conf
+echo "Include = /etc/pacman.d/chaotic-mirrorlist" >> /etc/pacman.conf
+
+pacman -Syyu --noconfirm
+
 trap 'exit 1' 1 2 3 15
 
 _help() {
@@ -86,6 +117,28 @@ installpkg(){
             "${@}" || true
 }
 
+installpkg2(){
+    cat /etc/alteriso-pacman.conf
+    cat /etc/pacman.conf
+    # Install
+    if ! pacman -Qq "${1}" 1> /dev/null 2>&1; then
+        _oldpwd="$(pwd)"
+        # Build
+        sudo -u "${aur_username}" git clone --depth=1 -b $1 "https://github.com/archlinux/aur.git" "/tmp/${1}"
+        cd "/tmp/${1}"
+        sudo -u "${aur_username}" makepkg --ignorearch --clean --cleanbuild --force --skippgpcheck --noconfirm --syncdeps
+
+        # Install
+        for _pkg2 in $(cd "/tmp/${1}"; sudo -u "${aur_username}" makepkg --packagelist); do
+            pacman "${pacman_args[@]}" -U "${_pkg2}"
+        done
+
+        # Remove debtis
+        cd ..
+        remove "/tmp/${1}"
+        cd "${_oldpwd}"
+    fi
+}
 
 #-- main funtions --#
 prepare_env(){
@@ -157,7 +210,7 @@ install_aur_pkgs(){
     chmod +s /usr/bin/sudo
     for _pkg in "${@}"; do
         pacman -Qq "${_pkg}" > /dev/null 2>&1  && continue
-        installpkg "${_pkg}"
+        installpkg2 "${_pkg}"
 
         if ! pacman -Qq "${_pkg}" > /dev/null 2>&1; then
             echo -e "\n[aur.sh] Failed to install ${_pkg}\n"
@@ -167,7 +220,7 @@ install_aur_pkgs(){
 
     # Reinstall failed package
     for _pkg in "${failedpkg[@]}"; do
-        installpkg "${_pkg}"
+        installpkg2 "${_pkg}"
         if ! pacman -Qq "${_pkg}" > /dev/null 2>&1; then
             echo -e "\n[aur.sh] Failed to install ${_pkg}\n"
             exit 1

@@ -1,0 +1,69 @@
+# I used https://github.com/soracqt/myarch as a reference.
+# Thanks to soracqt(https://github.com/soracqt).
+
+name: Build ISO 
+
+on:
+  push:
+    branches:
+      - '*'
+  schedule:
+    - cron: '0 3 * * *'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/archlinux365/9318-archlinux-docker/root:latest
+      volumes:
+        - /home/runner/work/alterdir/alterdir:/tmp/alterdir
+      options: "--privileged"
+
+    steps:
+      - name: Install SSH Key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.MY_SF_SSH }} 
+          known_hosts: 'just-a-placeholder-so-we-dont-get-errors'
+      - uses: actions/checkout@v2
+      - name: build
+        run: ./6.ci.sh
+
+  release:
+    runs-on: ubuntu-latest
+    needs: [build]
+    steps:
+
+      - uses: actions/checkout@v2
+
+      - name: Get current date
+        id: build_no
+        run: echo "::set-output name=build_no::$GITHUB_REF_NAME-$GITHUB_RUN_NUMBER"
+
+      # - name: Download artifact
+      #   uses: actions/download-artifact@v2
+      #   with:
+      #     name: uhuru_x86_64
+
+      - name: Install Tools
+        run: sudo apt install -y jq openssh-client
+
+      - name: Upload to sf
+        id: uploadiso
+        run: echo "::set-output name=url::Please Download ISO From SourceForge https://sourceforge.net/projects/alterlinux365/files/${GITHUB_REF_NAME}/${GITHUB_RUN_NUMBER}"
+      # ${GITHUB_REF_NAME}-${GITHUB_RUN_NUMBER}"
+      # - name: Split ISO Images
+      #   run: |
+      #     ls UhuruOS-xfce_loid-en-*.iso | xargs -n1 -I{} bash -c "split -b1500m {} {}_splitted_ ; rm {}"
+
+      - name: Create release
+        uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.build_no.outputs.build_no }}
+          name: ${{ steps.build_no.outputs.build_no }}
+          body: ${{steps.uploadiso.outputs.url}}
+          draft: false
+          prerelease: false

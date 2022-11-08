@@ -3,12 +3,12 @@
 pkgname=alterlinux-calamares
 _reponame=alterlinux-calamares-old
 pkgver="3.2.35"
-pkgrel=3
+pkgrel=4
 _pkgrel='b2'
 pkgdesc='Distribution-independent installer framework'
 arch=('i686' 'x86_64')
 license=(GPL)
-url="https://github.com/FascodeNet/alterlinux-calamares"
+url="https://github.com/alterlinux365/alterlinux-calamares-old"
 license=('LGPL')
 depends=('kconfig' 'kcoreaddons' 'kiconthemes' 'ki18n' 'kio' 'solid' 'yaml-cpp' 'kpmcore'
          'boost-libs' 'hwinfo' 'qt5-svg' 'polkit-qt5' 'gtk-update-icon-cache' 'plasma-framework'
